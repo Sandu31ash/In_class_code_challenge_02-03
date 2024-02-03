@@ -44,11 +44,24 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doGet(req, resp);
 
+//        String name = req.getParameter("name");
+//        var writer = resp.getWriter();
+//        resp.setContentType("text/html");
+//        System.out.println("Name : "+name);
+//        writer.println("Name : "+name);
+
         String name = req.getParameter("name");
-        var writer = resp.getWriter();
-        resp.setContentType("text/html");
-        System.out.println("Name : "+name);
-        writer.println("Name : "+name);
+        if (req.getContentType() == null ||
+                !req.getContentType().toLowerCase().startsWith("application/json")) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } else {
+            // create writer
+            var writer = resp.getWriter();
+            resp.setContentType("text/html");
+            // parameter use
+            System.out.println("Name : "+name);
+            writer.println("Name : "+name);
+        }
 
     }
 
