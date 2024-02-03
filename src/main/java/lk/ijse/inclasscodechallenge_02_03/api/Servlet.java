@@ -44,19 +44,11 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doGet(req, resp);
 
-        if (req.getContentType() == null || !req.getContentType().toLowerCase().startsWith("application/json")) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-        }else{
-            Jsonb jsonb = JsonbBuilder.create();
-            List<SDTO> itemList = jsonb.fromJson(req.getReader(),
-                    new ArrayList<SDTO>(){
-                    }.getClass().getGenericSuperclass());
-//        itemList.forEach(System.out::println);
-
-            System.out.println(itemList);
-
-            jsonb.toJson(itemList,resp.getWriter()); //response ekak write karana vidiya
-        }
+        String name = req.getParameter("name");
+        var writer = resp.getWriter();
+        resp.setContentType("text/html");
+        System.out.println("Name : "+name);
+        writer.println("Name : "+name);
 
     }
 
